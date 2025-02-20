@@ -4,7 +4,7 @@ import streamlit as st
 
 def main():
     # Título principal
-    st.title("Sistema holis Inteligente Integrado para Predicción, Clasificación y Recomendación en Comercio Electrónico")
+    st.title("Sistema Inteligente Integrado para Predicción, Clasificación y Recomendación en Comercio Electrónico")
 
     # Información del curso y equipo
     st.markdown("### Redes Neuronales y Algoritmos Bio-inspirados")
