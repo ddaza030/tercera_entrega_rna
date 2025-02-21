@@ -132,3 +132,8 @@ fig_line = px.line(
 )
 fig_line.update_traces(line_color='#2E86C1')
 st.plotly_chart(fig_line, use_container_width=True)
+
+# Footer
+st.markdown("---")
+st.markdown(
+    "*Sistema desarrollado como proyecto del curso de Redes Neuronales y Algoritmos Bio-inspirados*")
