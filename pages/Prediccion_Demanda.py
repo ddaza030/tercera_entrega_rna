@@ -114,7 +114,7 @@ with col1:
 with col2:
     st.metric("Número de Semanas", f"{len(df_filtered):,.0f}")
 with col3:
-    st.metric("Ventas Totales", f"{df_filtered['ventas_semana'].sum():,.0f}")
+    st.metric("Ventas Totales (Dolares)", f"{df_filtered['ventas_semana'].sum():,.0f}")
 with col4:
     st.metric("Promedio Semanal", f"{df_filtered['ventas_semana'].mean():,.0f}")
 
@@ -127,7 +127,7 @@ fig_line = px.line(
     title='Evolución de Ventas Semanales',
     labels={
         'fecha_inicio_semana': 'Fecha',
-        'ventas_semana': 'Ventas'
+        'ventas_semana': 'Ventas (Dolares)'
     }
 )
 fig_line.update_traces(line_color='#2E86C1')
