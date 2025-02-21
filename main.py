@@ -17,6 +17,7 @@ def main():
         st.markdown("""
         - Juan Manuel Vera Echeverri (jverae@unal.edu.co)
         - Daniel Daza Macías (dadazam@unal.edu.co)
+        - Julian Orrego Martínez (jorrego@unal.edu.co)
         """)
     with col2:
         st.markdown("""
