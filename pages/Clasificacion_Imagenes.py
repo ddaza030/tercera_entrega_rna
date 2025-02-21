@@ -132,7 +132,7 @@ if uploaded_file is not None and model is not None:
                     if confidence / 100 >= CONFIDENCE_THRESHOLD:
                         st.progress(float(prediction[0][i]))
                     else:
-                        st.progress(float(prediction[0][i]), text_color='gray')
+                        st.progress(float(prediction[0][i]))
 
     except Exception as e:
         st.error(f"Error al procesar la imagen: {str(e)}")
