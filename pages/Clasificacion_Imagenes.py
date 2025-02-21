@@ -1,4 +1,3 @@
-# pages/2_🖼️_Clasificacion_de_Productos.py
 import streamlit as st
 from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing import image
@@ -21,6 +20,7 @@ a partir de imágenes. Sube una imagen de un producto y el sistema determinará 
 """)
 
 categories = ['Jean', 'Sofá', 'Camiseta', 'Televisor']
+CONFIDENCE_THRESHOLD = 0.85  # 85% threshold
 
 
 @st.cache_resource
@@ -102,25 +102,37 @@ if uploaded_file is not None and model is not None:
 
         with st.spinner('Procesando imagen...'):
             img_array = preprocess_image(img, input_size)
-
             prediction = predict_image(model, img_array)
 
-            # Obtener la clase predicha
+            # Obtener la clase predicha y su confianza
+            max_confidence = np.max(prediction[0])
             predicted_class = np.argmax(prediction[0])
-            confidence = prediction[0][predicted_class] * 100
 
         with col2:
             st.subheader("Resultado de la Clasificación:")
-            st.success(
-                f"**Categoría Predicha:** {categories[predicted_class if predicted_class < len(categories) else 0]}")
-            st.write(f"**Confianza:** {confidence:.2f}%")
+
+            # Verificar si la confianza supera el threshold
+            if max_confidence >= CONFIDENCE_THRESHOLD:
+                st.success(
+                    f"**Categoría Predicha:** {categories[predicted_class if predicted_class < len(categories) else 0]}")
+                st.write(f"**Confianza:** {max_confidence * 100:.2f}%")
+            else:
+                st.warning(
+                    f"**Categoría Predicha:** Ninguna\n\n" +
+                    f"La confianza máxima ({max_confidence * 100:.2f}%) no supera el umbral mínimo de {CONFIDENCE_THRESHOLD * 100}%"
+                )
 
             # Mostrar todas las probabilidades
             st.subheader("Probabilidades por Categoría:")
             for i, category in enumerate(categories):
                 if i < len(prediction[0]):
-                    st.write(f"{category}: {prediction[0][i] * 100:.2f}%")
-                    st.progress(float(prediction[0][i]))
+                    confidence = prediction[0][i] * 100
+                    st.write(f"{category}: {confidence:.2f}%")
+                    # Usar un color diferente para las barras según si superan el threshold
+                    if confidence / 100 >= CONFIDENCE_THRESHOLD:
+                        st.progress(float(prediction[0][i]))
+                    else:
+                        st.progress(float(prediction[0][i]), text_color='gray')
 
     except Exception as e:
         st.error(f"Error al procesar la imagen: {str(e)}")
