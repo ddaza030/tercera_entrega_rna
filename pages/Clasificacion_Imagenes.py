@@ -129,10 +129,7 @@ if uploaded_file is not None and model is not None:
                     confidence = prediction[0][i] * 100
                     st.write(f"{category}: {confidence:.2f}%")
                     # Usar un color diferente para las barras según si superan el threshold
-                    if confidence / 100 >= CONFIDENCE_THRESHOLD:
-                        st.progress(float(prediction[0][i]))
-                    else:
-                        st.progress(float(prediction[0][i]))
+                    st.progress(float(prediction[0][i]))
 
     except Exception as e:
         st.error(f"Error al procesar la imagen: {str(e)}")
